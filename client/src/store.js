@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import thunk from 'redux-thunk';
 
 // Slices
 import authReducer from './features/auth/authSlice';
@@ -29,7 +28,8 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: ['persist/PERSIST', 'persist/REHYDRATE'],
       },
-    }).concat(thunk),
+      thunk: true
+    }),
   devTools: process.env.NODE_ENV !== 'production',
 });
 

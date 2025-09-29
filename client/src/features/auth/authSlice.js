@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import setAuthToken from '../../../utils/setAuthToken';
+import setAuthToken from '../../utils/setAuthToken';
 
 // Async thunks
 export const loadUser = createAsyncThunk('auth/loadUser', async (_, { rejectWithValue }) => {

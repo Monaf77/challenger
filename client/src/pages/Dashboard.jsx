@@ -25,12 +25,13 @@ const Dashboard = () => {
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (user) {
-      dispatch(getServers());
-    }
+    // تحميل السيرفرات حتى بدون تسجيل الدخول للاختبار
+    dispatch(getServers());
   }, [dispatch, user]);
 
-  if (loading && !servers) {
+  // تعطيل شاشة التحميل للاختبار
+  // if (loading && !servers) {
+  if (false) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="60vh">
         <CircularProgress />

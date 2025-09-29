@@ -3,9 +3,9 @@ const express = require('express');
 const cors = require('cors');
 const http = require('http');
 const socketIo = require('socket.io');
-const connectDB = require('./config/db');
-const authRoutes = require('./routes/auth');
-const serverRoutes = require('./routes/servers');
+const connectDB = require('./server/config/db');
+const authRoutes = require('./server/routes/auth');
+const serverRoutes = require('./server/routes/servers');
 const { errorHandler } = require('./middleware/error');
 
 // Connect to MongoDB
