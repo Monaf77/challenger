@@ -3,29 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مرحباً بك</title>
+    <title>لوحة تحكم سيرفرات التحدي</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <header class="header">
+        <a href="index.html" class="logo">
+            <i class="fas fa-gamepad logo-icon"></i>
+            <span class="logo-text">تحدي الألعاب</span>
+        </a>
+    </header>
+
     <div class="container">
-        <h1>مرحباً بك في موقعنا</h1>
-        <div id="userInfo" style="display: none;">
-            <p>مرحباً <span id="userName"></span>!</p>
-            <p>لقد قمت بتسجيل الدخول بنجاح.</p>
-            <button id="signOutBtn" class="btn">تسجيل الخروج</button>
+        <!-- لوحة المستخدم -->
+        <div id="userInfo" class="user-panel" style="display: none;">
+            <div class="welcome-message">
+                <h1>مرحباً <span id="userName"></span>! 👋</h1>
+                <p>إدارة سيرفرات التحدي الخاصة بك</p>
+            </div>
+            
+            <button id="createServerBtn" class="btn">
+                <i class="fas fa-plus"></i> إنشاء سيرفر جديد
+            </button>
+            
+            <div class="servers-section">
+                <h2>سيرفراتي</h2>
+                <div id="serversList" class="server-grid">
+                    <!-- سيتم إضافة السيرفرات هنا ديناميكياً -->
+                    <div class="no-servers">
+                        <i class="fas fa-server" style="font-size: 3rem; opacity: 0.5; margin-bottom: 1rem;"></i>
+                        <p>لا توجد سيرفرات حتى الآن</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="user-actions">
+                <button id="signOutBtn" class="btn btn-outline">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+            </div>
         </div>
-        <div id="guestInfo">
-            <p>يرجى تسجيل الدخول للوصول إلى الموقع</p>
-            <div class="buttons">
-                <a href="login.html" class="btn">تسجيل الدخول</a>
-                <a href="signup.html" class="btn">إنشاء حساب جديد</a>
+
+        <!-- واجهة الزوار -->
+        <div id="guestInfo" class="guest-panel">
+            <div class="welcome-message">
+                <h1>مرحباً بك في منصة سيرفرات التحدي</h1>
+                <p>أنشئ وأدر سيرفرات الألعاب الخاصة بك بسهولة</p>
+            </div>
+            
+            <div class="auth-buttons">
+                <a href="login.html" class="btn">
+                    <i class="fas fa-sign-in-alt"></i> تسجيل الدخول
+                </a>
+                <a href="signup.html" class="btn btn-outline">
+                    <i class="fas fa-user-plus"></i> إنشاء حساب
+                </a>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-bolt"></i>
+                    <h3>سريع وسهل</h3>
+                    <p>أنشئ سيرفرك في دقائق</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>آمن</h3>
+                    <p>حماية متقدمة لسيرفراتك</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-cogs"></i>
+                    <h3>متعدد المنصات</h3>
+                    <p>يدعم جميع إصدارات الألعاب</p>
+                </div>
             </div>
         </div>
     </div>
-    <script src="firebase-config.js"></script>
-    <script src="auth.js"></script>
+
+    <!-- نافذة إنشاء سيرفر جديدة -->
+    <div id="createServerModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2><i class="fas fa-plus-circle"></i> إنشاء سيرفر جديد</h2>
+            
+            <form id="serverForm" class="form">
+                <div class="form-group">
+                    <label for="serverName">اسم السيرفر</label>
+                    <input type="text" id="serverName" required placeholder="مثال: سيرفر التحدي الأول">
+                </div>
+                
+                <div class="form-group">
+                    <label for="serverVersion">إصدار اللعبة</label>
+                    <select id="serverVersion" required>
+                        <option value="">اختر الإصدار</option>
+                        <option value="spotify">Spotify</option>
+                        <option value="paper">Paper</option>
+                        <option value="spigot">Spigot</option>
+                        <option value="bukkit">Bukkit</option>
+                        <option value="vanilla">Vanilla</option>
+                    </select>
+                </div>
+                
+                <div id="pluginOptions" class="form-group" style="display: none;">
+                    <label>البلجنات المتاحة</label>
+                    <div class="plugins-list">
+                        <label class="plugin-option">
+                            <input type="checkbox" name="plugins" value="essentials"> Essentials
+                        </label>
+                        <label class="plugin-option">
+                            <input type="checkbox" name="plugins" value="worldedit"> WorldEdit
+                        </label>
+                        <label class="plugin-option">
+                            <input type="checkbox" name="plugins" value="vault"> Vault
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-server"></i> إنشاء السيرفر
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="dashboard.js"></script>
 </body>
 </html>
